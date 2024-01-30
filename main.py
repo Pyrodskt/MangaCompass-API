@@ -8,7 +8,6 @@ app = Flask(__name__)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 
-
 def filter_by_name(search_string):
     # fonction de filtre sur les titres dans les données, retourne l'objet
     data = file_buffer.get_file_data()
@@ -48,6 +47,7 @@ def manga(title):
 # route tertiaire pour ajouter des mangas dans la liste
 @app.route('/add/manga', methods=["POST"])
 def add_manga():
+
     data = dict(request.args)
     print("post request data: ", data)
     old_data = file_buffer.get_file_data()
@@ -60,3 +60,8 @@ def add_manga():
         response = flask.jsonify(message='Data added successfully')
         response.status = 200
         return response
+    
+if __name__ == "__main__":
+    app.run("0.0.0.0", 5000)
+
+app.run()

@@ -1,5 +1,7 @@
 FROM python:3.11-slim
-COPY . .
+WORKDIR /app
+COPY . /app
+RUN cd /app
 RUN pip install -r requirements.txt
 EXPOSE 5000
 CMD [ "python", "main.py" ]

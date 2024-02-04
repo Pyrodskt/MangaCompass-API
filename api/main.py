@@ -37,12 +37,21 @@ def mangas():
     return response
 
 # route secondaire pour rechercher par titre
-@app.route('/manga/<title>', methods=["GET", "POST", "UPDATE", "DELETE"])
+@app.route('/manga/<title>', methods=["GET", "POST"])
 def manga(title):
         
-    response = flask.jsonify(message=filter_by_name(title))
-    response.headers.add('Access-Control-Allow-Origin', "*")
+    if request.method == "GET":
+        response = flask.jsonify(message=filter_by_name(title))
+        response.headers.add('Access-Control-Allow-Origin', "*")
+
+    if request.method == "POST":
+        params = request.args.get('param')
+        response = flask.jsonify(message="Getting a post request with params" + params)
+        response.headers.add('Access-Control-Allow-Origin', "*")
+    
     return response
+        
+    
 
 # route tertiaire pour ajouter des mangas dans la liste
 @app.route('/add/manga', methods=["POST"])

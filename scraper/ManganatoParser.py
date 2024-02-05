@@ -3,9 +3,9 @@ from bs4 import BeautifulSoup
 import re
 import time
 
-class JapscansParser():
+class ManganatoParser():
     def __init__(self, url, current):
-        self.name = "Japscans Parser"
+        self.name = "Manganato Parser"
         self.url = url
         self.current = current
         self.results = []

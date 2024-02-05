@@ -12,6 +12,6 @@ def get_manga_data(title):
         if i['title'] == title:
             return i
         
-def save_file(content, filename):
-    with open(filename, "w") as w:
+def save_file(content):
+    with open("data/data.json", "w") as w:
         w.writelines(json.dumps(content))

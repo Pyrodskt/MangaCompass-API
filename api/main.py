@@ -22,10 +22,7 @@ def update_manga_data(title, new_datas):
     content = file_buffer.get_file_data()
     for i in content['datas']:
         if i['title'] == title:
-            i['list'] = new_datas['list']
-            i['title'] = new_datas['title']
-            i['url'] = new_datas['url']
-            i['current'] = new_datas['current']
+            i['current'] = new_datas
             file_buffer.save_file(content)
             return 200
     
@@ -45,8 +42,10 @@ def manga(title):
         response.headers.add('Access-Control-Allow-Origin', "*")
 
     if request.method == "POST":
-        params = request.args.get('param')
-        response = flask.jsonify(message="Getting a post request with params" + params)
+        params = request.args.get('current')
+        update_manga_data(title=title, new_datas=params)
+        response = flask.jsonify(message="Getting a post request with param current=" + params)
+
         response.headers.add('Access-Control-Allow-Origin', "*")
     
     return response

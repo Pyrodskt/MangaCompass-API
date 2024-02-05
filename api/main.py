@@ -18,7 +18,7 @@ def filter_by_name(search_string):
     return ret 
 
 def update_manga_data(title, new_datas):
-    # Tentative non fonctionnelle de modifier le fichier json => Fonctionne pas
+    # update du current chap a lire.
     content = file_buffer.get_file_data()
     for i in content['datas']:
         if i['title'] == title:
@@ -43,30 +43,30 @@ def manga(title):
 
     if request.method == "POST":
         params = request.args.get('current')
-        update_manga_data(title=title, new_datas=params)
-        response = flask.jsonify(message="Getting a post request with param current=" + params)
-
+        response = flask.jsonify(message="Getting a post request with params" + params)
         response.headers.add('Access-Control-Allow-Origin', "*")
+        update_manga_data(title, params)
     
     return response
         
     
 
 # route tertiaire pour ajouter des mangas dans la liste
-@app.route('/add/manga', methods=["POST"])
+@app.route('/add/manga', methods=["GET", "POST", "OPTIONS"])
 def add_manga():
-
-    data = dict(request.args)
-    print("post request data: ", data)
+    print(request.form)
+    title = request.form.get('title')
+    url = request.form.get('url')
     old_data = file_buffer.get_file_data()
-    if filter_by_name(data['title']):
+    if filter_by_name(title):
         response = flask.jsonify(message='Data already existing in DB, please check title.')
+        response.headers.add('Access-Control-Allow-Origin', "*")
         return response
     else:
-        old_data["datas"].append({"title": data['title'], "url": data['url'], "current": data['current']})
-        file_buffer.save_file(content=old_data, filename='data2.json')
-        response = flask.jsonify(message='Data added successfully')
-        response.status = 200
+        old_data["datas"].append({"title": title, "url": url, "current": "", "list": []})
+        file_buffer.save_file(content=old_data, filename='data/data.json')
+        response = flask.jsonify(message='Data added successfully ' + request.json)
+        response.headers.add('Access-Control-Allow-Origin', "*")
         return response
     
 if __name__ == "__main__":

@@ -1,6 +1,6 @@
 import json
 import threading
-from JapscansParser import JapscansParser
+from ManganatoParser import ManganatoParser
 from WebtoonParser import WebtoonParser
 from MangarockteamParser import MangarockteamParser
 
@@ -66,7 +66,7 @@ class Manga(threading.Thread):
     def run(self):
 
         if 'chapmanganato' in self.url:
-            self.parser = JapscansParser(self.url, self.current)
+            self.parser = ManganatoParser(self.url, self.current)
 
         if 'webtoons' in self.url:
             self.parser = WebtoonParser(self.url, self.current)

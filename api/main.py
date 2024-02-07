@@ -43,9 +43,10 @@ def manga(title):
 
     if request.method == "POST":
         params = request.args.get('current')
-        response = flask.jsonify(message="Getting a post request with params" + params)
-        response.headers.add('Access-Control-Allow-Origin', "*")
         update_manga_data(title, params)
+        response = flask.jsonify(message="Success")
+        response.headers.add('Access-Control-Allow-Origin', "*")
+        
     
     return response
         
@@ -59,13 +60,13 @@ def add_manga():
     url = request.form.get('url')
     old_data = file_buffer.get_file_data()
     if filter_by_name(title):
-        response = flask.jsonify(message='Data already existing in DB, please check title.')
+        response = flask.jsonify(message='Denied')
         response.headers.add('Access-Control-Allow-Origin', "*")
         return response
     else:
         old_data["datas"].append({"title": title, "url": url, "current": "", "list": []})
         file_buffer.save_file(content=old_data, filename='data/data.json')
-        response = flask.jsonify(message='Data added successfully ' + request.json)
+        response = flask.jsonify(message='Data added successfully ')
         response.headers.add('Access-Control-Allow-Origin', "*")
         return response
     

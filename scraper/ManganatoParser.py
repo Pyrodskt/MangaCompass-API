@@ -10,7 +10,7 @@ class ManganatoParser():
         self.current = current
         self.results = []
         self.pages = []
-        self.search(self.url)
+        self.search(self.url) 
 
     def search(self, url):
         req = requests.get(url)

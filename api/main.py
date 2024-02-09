@@ -4,12 +4,10 @@ import json
 import file_buffer
 
 app = Flask(__name__)
-#A enlever => a des fins de tests en local (cors policy déclanchée car même origine)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 
 def filter_by_name(search_string):
-    # fonction de filtre sur les titres dans les données, retourne l'objet
     data = file_buffer.get_file_data()
     ret = []
     for i in data['datas']:
@@ -18,7 +16,6 @@ def filter_by_name(search_string):
     return ret 
 
 def update_manga_data(title, new_datas):
-    # update du current chap a lire.
     content = file_buffer.get_file_data()
     for i in content['datas']:
         if i['title'] == title:
@@ -26,14 +23,12 @@ def update_manga_data(title, new_datas):
             file_buffer.save_file(content)
             return 200
     
-# route principale pr tous les mangas
 @app.route("/mangas", methods=["GET"])
 def mangas():
     response = flask.jsonify(message=file_buffer.get_file_data())
     response.headers.add('Access-Control-Allow-Origin', "*")
     return response
 
-# route secondaire pour rechercher par titre
 @app.route('/manga/<title>', methods=["GET", "POST"])
 def manga(title):
         
@@ -52,7 +47,6 @@ def manga(title):
         
     
 
-# route tertiaire pour ajouter des mangas dans la liste
 @app.route('/add/manga', methods=["GET", "POST", "OPTIONS"])
 def add_manga():
     print(request.form)

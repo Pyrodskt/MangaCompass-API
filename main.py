@@ -26,7 +26,7 @@ def update_manga_data(title, new_datas):
 @app.route("/mangas", methods=["GET"])
 def mangas():
     response = flask.jsonify(message=file_buffer.get_file_data())
-    response.headers.add('Access-Control-Allow-Origin', "*")
+    #response.headers.add('Access-Control-Allow-Origin', "*")
     return response
 
 @app.route('/manga/<title>', methods=["GET", "POST"])
@@ -40,7 +40,7 @@ def manga(title):
         params = request.args.get('current')
         update_manga_data(title, params)
         response = flask.jsonify(message="Success")
-        response.headers.add('Access-Control-Allow-Origin', "*")
+        #response.headers.add('Access-Control-Allow-Origin', "*")
         
     
     return response

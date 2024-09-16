@@ -34,7 +34,7 @@ def manga(title):
         
     if request.method == "GET":
         response = flask.jsonify(message=filter_by_name(title))
-        response.headers.add('Access-Control-Allow-Origin', "*")
+        #response.headers.add('Access-Control-Allow-Origin', "*")
 
     if request.method == "POST":
         params = request.args.get('current')
@@ -55,13 +55,13 @@ def add_manga():
     old_data = file_buffer.get_file_data()
     if filter_by_name(title):
         response = flask.jsonify(message='Denied')
-        response.headers.add('Access-Control-Allow-Origin', "*")
+        #response.headers.add('Access-Control-Allow-Origin', "*")
         return response
     else:
         old_data["datas"].append({"title": title, "url": url, "current": "", "list": []})
         file_buffer.save_file(content=old_data, filename='data/data.json')
         response = flask.jsonify(message='Data added successfully ')
-        response.headers.add('Access-Control-Allow-Origin', "*")
+        #response.headers.add('Access-Control-Allow-Origin', "*")
         return response
     
 if __name__ == "__main__":

@@ -14,4 +14,4 @@ def get_manga_data(title):
         
 def save_file(content, filename='data/data.json'):
     with open(filename, "w") as w:
-        w.writelines(json.dumps(content))
+        w.writelines(json.dumps(content, indent=4))
